@@ -1,4 +1,4 @@
-# BokehEffectTransformation-Starter
+# NTIRE 2023 Bokeh Effect Transformation Challenge
 Starter code for the NTIRE 2023 Bokeh Effect Transformation Challenge
 
 ## Contents
