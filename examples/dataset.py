@@ -13,16 +13,14 @@ class BokehDataset(Dataset):
 
         self._source_paths = sorted(glob.glob(osp.join(root_folder, "*.src.jpg")))
         self._target_paths = sorted(glob.glob(osp.join(root_folder, "*.src.jpg")))
-        self._source_alpha_paths = sorted(glob.glob(osp.join(root_folder, "*.alpha_src.png")))
-        self._target_alpha_paths = sorted(glob.glob(osp.join(root_folder, "*.alpha_tgt.png")))
+        self._alpha_paths = sorted(glob.glob(osp.join(root_folder, "*.alpha.png")))
 
         self._meta_data = self._read_meta_data(osp.join(root_folder, "meta.txt"))
 
         file_counts = [
             len(self._source_paths),
             len(self._target_paths),
-            len(self._source_alpha_paths),
-            len(self._target_alpha_paths),
+            len(self._alpha_paths),
             len(self._meta_data),
         ]
         if not file_counts[0] or len(set(file_counts)) != 1:
@@ -62,8 +60,7 @@ class BokehDataset(Dataset):
     def __getitem__(self, index):
         source = Image.open(self._source_paths[index])
         target = Image.open(self._target_paths[index])
-        source_alpha = Image.open(self._source_alpha_paths[index])
-        target_alpha = Image.open(self._target_alpha_paths[index])
+        alpha = Image.open(self._alpha_paths[index])
 
         filename = osp.basename(self._source_paths[index])
         id = filename.split(".")[0]
@@ -72,14 +69,12 @@ class BokehDataset(Dataset):
         if self._transform:
             source = self._transform(source)
             target = self._transform(target)
-            source_alpha = self._transform(source_alpha)
-            target_alpha = self._transform(target_alpha)
+            alpha = self._transform(alpha)
 
         return {
             "source": source,
             "target": target,
-            "source_alpha": source_alpha,
-            "target_alpha": target_alpha,
+            "alpha": alpha,
             "src_lens": src_lens,
             "tgt_lens": tgt_lens,
             "disparity": disparity,
