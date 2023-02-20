@@ -17,7 +17,7 @@ def calculate_lpips(img0: torch.Tensor, img1: torch.Tensor):
 
 
 def calculate_psnr(img0, img1):
-    mse = np.mean((img0 - img1) ** 2)
+    mse = np.mean((img0.astype(np.float32) - img1.astype(np.float32)) ** 2)
     if mse == 0:
         return float("inf")
     max_val = np.max(img0)
