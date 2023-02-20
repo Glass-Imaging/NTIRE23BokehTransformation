@@ -12,7 +12,7 @@ class BokehDataset(Dataset):
         self._transform = transform
 
         self._source_paths = sorted(glob.glob(osp.join(root_folder, "*.src.jpg")))
-        self._target_paths = sorted(glob.glob(osp.join(root_folder, "*.src.jpg")))
+        self._target_paths = sorted(glob.glob(osp.join(root_folder, "*.tgt.jpg")))
         self._alpha_paths = sorted(glob.glob(osp.join(root_folder, "*.alpha.png")))
 
         self._meta_data = self._read_meta_data(osp.join(root_folder, "meta.txt"))
